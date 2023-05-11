@@ -1,0 +1,52 @@
+﻿@using Entitiy.Concrete.Dtos
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ShoppingWebUI</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/toast.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/ShoppingWebUI.styles.css" asp-append-version="true" />
+
+</head>
+<body>
+    <header>
+        <div class="topnav" style="height: auto !important">
+            <a class="topnav-right " href="/Product">
+                <img alt="Logo" src="~/Images/Logo.png" style="height: 4rem !important;" />
+            </a>
+            <a class="btn btn-outline-primary" style="border:0" href="/Product">Products</a>
+            <a class="btn btn-outline-success" style="border: 0" href="/Category">Categories</a>
+            <a class="btn btn-outline-info" style="border: 0" href="/Cart"><i class="bi bi-cart"></i></a>
+            <a class="btn btn-outline-danger" style="float: right !important; border: 0;" asp-action="Logout" asp-controller="Login">Logout</a>
+        </div>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            <div class="toast">Sampletext </div>
+            <script src="js/toast.js"></script>
+            @if (TempData["message"] != null)
+            {
+                <div class="alert alert-warning">
+                    @TempData["message"]
+                </div>
+            }
+            @RenderBody()
+        </main>
+    </div>
+    <footer class="border-top footer text-muted" style="display: contents">
+        <div class="container" >
+            &copy; <span id="year"><script>document.getElementById("year").innerHTML = new Date().getFullYear();</script></span> - Selahaddin Şamil Neoldum
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,62 @@
+﻿@model CartListViewModel
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<div class="table table-responsive">
+
+    @if (Model.Cart.CartLines.Count != 0)
+    {
+        <h2>Product List</h2>
+        <a href="/cart/complete" class="btn btn-outline-success">Complete shopping</a>
+
+        if (@Model.Cart.Total!=null)
+        {
+            <h3 style="float: right">Total price: @Model.Cart.Total</h3>
+        }
+
+        <table class="table table-responsive" style="width: -webkit-fill-available">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Cart piece</th>
+                    <th>Action</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            @foreach (var cartLine in Model.Cart.CartLines)
+            {
+                <tbody style="width: -webkit-fill-available !important; display: revert !important">
+                    <tr>
+                        <td>@cartLine.Product.ProductName</td>
+                        <td>@cartLine.Product.QuantityPerUnit</td>
+                        <td>@cartLine.Product.UnitPrice</td>
+                        <td>@cartLine.Quantity</td>
+                        <td>
+                            <a class="btn btn-outline-success" asp-controller="Cart" asp-action="IncreaseFromCart" asp-route-productId="@cartLine.Product.ProductId"><i class="bi bi-cart-plus"></i></a>
+                            @if (@cartLine.Quantity > 1)
+                            {
+                                <a class="btn btn-outline-warning" asp-controller="Cart" asp-action="ReduceFromCart" asp-route-productId="@cartLine.Product.ProductId"><i class="bi bi-cart-dash"></i></a>
+                            }
+                            <a class="btn btn-outline-danger" asp-controller="Cart" asp-action="RemoveFromCart" asp-route-productId="@cartLine.Product.ProductId"><i class="bi bi-cart-x"></i></a>
+                        </td>
+                        <td>@cartLine.Price</td>
+                    </tr>
+                </tbody>
+            }
+        </table>
+    }
+    else
+    {
+        <div style="vertical-align: middle;display: grid;align-items: center;align-content: center;justify-content: center;padding-top: 25%">
+            <h2>You have no products in your cart!</h2>
+            <span></span>
+            <a href="/Product" class="btn btn-outline-success">CONTINUE SHOPPING</a>
+        </div>
+
+    }
+</div>
