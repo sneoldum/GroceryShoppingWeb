@@ -23,6 +23,7 @@ module Program =
     let main args =
         let builder = WebApplication.CreateBuilder(args)
 
+
         builder
             .Services
             .AddControllersWithViews()
