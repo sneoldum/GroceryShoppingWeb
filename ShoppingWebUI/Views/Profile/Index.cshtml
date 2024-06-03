@@ -1,0 +1,216 @@
+﻿@using ShoppingWebUI.Services;
+@model ProfileViewModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Profile";
+    Layout = "_Layout";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil Düzenleme</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .sidebar {
+            height: 100vh;
+            background-color: #f8f9fa;
+        }
+
+        .main-content {
+            padding: 20px;
+        }
+
+        .card {
+            margin-top: 20px;
+        }
+
+        .btn-custom {
+            display: block;
+            margin-left: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-4">
+                <div class="list-group" id="list-tab" role="tablist">
+                    <a class="list-group-item list-group-item-action active" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab" aria-controls="profile">Kişisel Bilgiler</a>
+                    <a class="list-group-item list-group-item-action" id="list-coupons-list" data-toggle="list" href="#list-coupons" role="tab" aria-controls="coupons">Kuponlarım</a>
+                </div>
+            </div>
+            <div class="col-8">
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
+                        <div class="card">
+                            <div class="card-header">
+                                Profil Düzenleme
+                            </div>
+                            <div class="card-body">
+                                <form asp-action="updateUser" method="post">
+                                    <div class="form-group">
+                                        <label for="firstName">Ad</label>
+                                        <input type="text" class="form-control" id="firstName" placeholder="@Model.FirstName" asp-for="FirstName">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="lastName">Soyad</label>
+                                        <input type="text" class="form-control" id="lastName" placeholder="@Model.LastName" asp-for="LastName">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-custom">Değişiklikleri Kaydet</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="list-coupons" role="tabpanel" aria-labelledby="list-coupons-list">
+                        <div class="card">
+                            <div class="card-header">
+                                Kuponlarım
+                            </div>
+                            <div class="card-body">
+
+                                @if (Model.PlayedBets.Count != 0)
+                                {
+                                    bool printed = false;
+                                    foreach (var item in Model.PlayedBets)
+                                    {
+                                        var matchDetail = item.Split('-');
+                                        var betService = new BetService();
+                                        var title = "";
+                                        switch (Convert.ToInt32(matchDetail[2]))
+                                        {
+                                            case 1:
+                                                title = "Maç Sonucu";
+                                                break;
+                                            case 698:
+                                                title = "Maç Sonucu ve Karşılıklı Gol";
+                                                break;
+                                            case 89:
+                                                title = "Karşılıklı Gol";
+                                                break;
+                                            case 91:
+                                                title = "Tek/Çift";
+                                                break;
+                                            case 12:
+                                                title = "Tek/Çift";
+                                                break;
+                                        }
+                                        var match = betService.CheckFinishedMatches(Convert.ToInt32(matchDetail[6])).Datas.Matches;
+                                        if (match != null)
+                                        {
+                                            foreach (var bet in match)
+                                            {
+                                                if (Convert.ToInt32(matchDetail[1]) == bet.id)
+                                                {
+                                                    betService.CalculateBetResult(matchDetail, bet, Model.Username);
+                                                }
+                                            }
+                                        }
+
+                                        var activeMatch = betService.GetMatchById(Convert.ToInt32(matchDetail[0])).Datas;
+                                        if (activeMatch != null)
+                                        {
+                                            foreach (var bet in activeMatch.m)
+                                            {
+                                                if (Convert.ToInt32(matchDetail[1]) == bet.i)
+                                                {
+                                                    printed = true;
+                                                    <div class="card bg-warning text-white">
+                                                        <div class="card-header">
+                                                            Bekleyen Kupon
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <ul>
+                                                                <li>@activeMatch.hn - @activeMatch.an  - @title - @matchDetail[5] - @matchDetail[4]</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                }
+
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (!printed)
+                                            {
+                                                printed = true;
+                                                <div class="alert alert-warning">
+                                                    Bekleyen kuponunuz bulunmamaktadır.
+                                                </div>
+                                            }
+                                        }
+
+                                    }
+                                }
+
+                                @if (Model.ComplatedBets.Count != 0)
+                                {
+                                    foreach (var item in Model.ComplatedBets)
+                                    {
+                                        var matchDetail = item.Split('-');
+                                        var betService = new BetService();
+                                        var title = "";
+                                        switch (Convert.ToInt32(matchDetail[2]))
+                                        {
+                                            case 1:
+                                                title = "Maç Sonucu";
+                                                break;
+                                            case 698:
+                                                title = "Maç Sonucu ve Karşılıklı Gol";
+                                                break;
+                                            case 89:
+                                                title = "Karşılıklı Gol";
+                                                break;
+                                            case 12:
+                                                title = "Tek/Çift";
+                                                break;
+                                        }
+                                        foreach (var betslip in Model.ComplatedBets)
+                                        {
+                                            var betDetail = betslip.Split('-');
+                                            if (betDetail[7] == "WON")
+                                            {
+                                                <div class="card bg-success text-white">
+                                                    <div class="card-header">
+                                                        Sonuçlanan Kupon
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <ul>
+                                                            <li>@matchDetail[8] - @matchDetail[9]- @title - @betDetail[5] - @betDetail[4]</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="card bg-danger text-white">
+                                                    <div class="card-header">
+                                                        Sonuçlanan Kupon
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <ul>
+                                                            <li>@matchDetail[8] - @matchDetail[9]- @title - @betDetail[5] - @betDetail[4]</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+                                    }
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

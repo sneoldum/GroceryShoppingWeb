@@ -1,36 +1,14 @@
 using System.Reflection;
-using Business.Abstract;
-using Business.Concrete;
-using Core.Entities.Concrete;
 using Core.Utilities.Security.Encryption;
 using Core.Utilities.Security.Jwt;
-using DataAccess.Abstract;
-using DataAccess.Concrete.EntityFramework;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using ShoppingWebUI.Controllers;
-using ShoppingWebUI.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-//Ürün
-builder.Services.AddSingleton<IProductService, ProductManager>();
-builder.Services.AddSingleton<IProductDal, EfProductDal>();
-//Kategori
-builder.Services.AddSingleton<ICategoryService, CategoryManager>();
-builder.Services.AddSingleton<ICategoryDal, EfCategoryDal>();
-//Sepet
-builder.Services.AddScoped<ICartService, CartManager>();
-builder.Services.AddScoped<ICartSessionHelper, CartSessionHelper>();
-//Kullanýcý
-builder.Services.AddSingleton<ITokenHelper, JwtHelper>();
-builder.Services.AddSingleton<IUserService, UserManager>();
-builder.Services.AddSingleton<IUserDal, EfUserDal>();
-builder.Services.AddSingleton<IAuthService, AuthManager>();
 
 
 builder.Services.AddCors(options =>

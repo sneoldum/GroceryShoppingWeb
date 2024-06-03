@@ -1,105 +1,152 @@
 ﻿@model LoginViewModel
 
 @{
-    ViewBag.Title = "title";
+    ViewBag.Title = "Login - Register NoBet";
     Layout = null;
 }
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - ShoppingWebUI</title>
+    <title>@ViewData["Title"] - NoBet</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-
 </head>
-<header>
-</header>
-<bodyLogin>
 
-    <div class="contain">
-        <div class="blueBg">
-            <div class="box signin">
-                <h2>Already have an account ?</h2>
-                <button class="signinBtn" asp-controller="Login">Sign in</button>
-            </div>
-            <div class="box signup">
-                <h2>Don't have an account ?</h2>
-                <button class="signupBtn">Sign up</button>
-            </div>
+<bodyLogin style="overflow: hidden">
+    <div class="main-wrapper">
 
+        <div class="card-container">
+            <div class="card">
+                <div class="login-form">
+                    <div class="header">Log in</div>
+                    <div class="content">
+                        <form asp-action="Login" method="post">
+                            <div class="input-field">
+                                <input type="text" placeholder="Username" name="UserName">
+                            </div>
+                            <div class="input-field">
+                                <input type="password" placeholder="Password" name="Password">
+                            </div>
+                            <div class="input-field">
+                                <button class="btnLogin btn-submit" type="submit">Log in</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="footer">
+                        Don't have an account?
+                        <button class="btnLogin btn-rotate" id="btn-signup">Sign up</button>
+                    </div>
+                </div>
+                <div class="signup-form">
+                    <div class="header">Sign up</div>
+                    <div class="content">
+                        <form asp-action="Register" method="post">
+                            <div class="input-field">
+                                <input type="text" placeholder="Username" name="UserName">
+                            </div>
+                            <div class="input-field">
+                                <input type="text" placeholder="First name" name="FirstName">
+                            </div>
+                            <div class="input-field">
+                                <input type="text" placeholder="Last name" name="LastName">
+                            </div>
+                            <div class="input-field group">
+                                <input type="password" placeholder="Password" name="Password">
+                                <span class="see-password">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                        <path d="M0 0h24v24H0z" fill="none" />
+                                        <path fill="#fff" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" />
+                                    </svg>
+                                </span>
+                            </div>
+                            <div class="input-field">
+                                <button class="btnLogin btn-submit" type="submit" id="liveToastBtn">Get started</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="footer">
+                        <button class="btnLogin btn-rotate" id="btn-login">I have an account</button>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="formBx">
-            <div class="form signinForm">
-                @*
-                <h3>Sign In</h3>
-                @Html.TextBoxFor(m=>m.Email,new {@type="text",@class="form-control",@placeholder="Name"})
+    </div>
 
-                <input type="email" placeholder="Email" asp-for="Email"/>
-                <input type="password" placeholder="Password" asp-for="PasswordHash"/>
-                <input type="submit" value="Login" asp-controller="Login"/>
-                <a href="#" class="forgot">Forgot password</a>*@
-                @using (Html.BeginForm("Login", "Login", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                {
-                    <h3>Sign In</h3>
-
-                    @Html.TextBoxFor(m=>m.Email,new {@type="text",@class="form-control",@placeholder="Email"})
-                    <span asp-validation-for="UserDetail.Email"></span>
-
-                    @Html.TextBoxFor(m=>m.Password,new {@type="password",@class="form-control",@placeholder="Password"})
-                    <span asp-validation-for="UserDetail.PasswordHash"></span>
-                    
-                    <input type="submit" value="Login" />
-
-                    <a href="#" class="forgot">Forgot password</a>
-
-                }
-
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <img src="..." class="rounded me-2" alt="...">
+                <strong class="me-auto">Bootstrap</strong>
+                <small>11 mins ago</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
-            <div class="form signupForm">
-                <form>
-                    @if (TempData["message"] != null)
-                    {
-                        <div class="alert alert-warning">
-                            @TempData["message"]
-                        </div>
-                    }
-                    <h3>Sign Up</h3>
-                    @Html.TextBoxFor(m=>m.FirstName,new {@type="text",@class="form-control",@placeholder="First name"})
-                    <span asp-validation-for="UserDetail.FirstName"></span>
-                    @Html.TextBoxFor(m=>m.LastName,new {@type="text",@class="form-control",@placeholder="Last name"})
-                    <span asp-validation-for="UserDetail.LastName"></span>
-                    @Html.TextBoxFor(m=>m.Email,new {@type="text",@class="form-control",@placeholder="Email"})
-                    <span asp-validation-for="UserDetail.Email"></span>
-                    @Html.TextBoxFor(m=>m.Password,new {@type="password",@class="form-control",@placeholder="Password"})
-                    <span asp-validation-for="UserDetail.PasswordHash"></span>
-                    <input type="submit" value="Register" asp-controller="Login" asp-action="Register"/>
-                </form>
+            <div class="toast-body">
+                @if (ViewBag.UserLoginEx != null)
+                {
+                    <h3>@ViewBag.UserLoginEx</h3>
+                }
+                @if (ViewBag.UserRegisterEx != null)
+                {
+                    <h3>@ViewBag.UserRegisterEx</h3>
+                }
             </div>
         </div>
     </div>
 
     <script>
-        const signinBtn = document.querySelector('.signinBtn');
-        const signupBtn = document.querySelector('.signupBtn');
-        const formBx = document.querySelector('.formBx');
-        const body = document.querySelector("bodyLogin");
+        document.addEventListener('DOMContentLoaded', (event) => {
 
-        signupBtn.onclick = function () {
-            formBx.classList.add('active');
-            body.classList.add('active');
-        }
-        signinBtn.onclick = function () {
-            formBx.classList.remove('active');
-            body.classList.remove('active');
+            const rotateCard = () => {
+                const cardContainer = document.querySelector('.card-container')
+                cardContainer.classList.toggle('rotate')
+            }
 
+            const btnSignup = document.querySelector('#btn-signup'),
+                btnLogin = document.querySelector('#btn-login')
+
+            btnSignup.addEventListener('click', rotateCard)
+            btnLogin.addEventListener('click', rotateCard)
+
+            /*See password*/
+            const seePassword = () => {
+                const seePwdIcon = document.querySelector('.see-password'),
+                    pwdInput = document.querySelector('.group input')
+
+                seePwdIcon.addEventListener('mousedown', () => {
+                    pwdInput.type = 'text'
+                })
+
+                seePwdIcon.addEventListener('mouseup', () => {
+                    pwdInput.type = 'password'
+                })
+
+                seePwdIcon.addEventListener('mouseover', () => {
+                    pwdInput.type = 'password'
+                })
+            }
+
+            seePassword()
+        })
+        document.body.addEventListener("pointermove", (e) => {
+            const { currentTarget: el, clientX: x, clientY: y } = e;
+            const { top: t, left: l, width: w, height: h } = el.getBoundingClientRect();
+            el.style.setProperty('--posX', x - l - w / 2);
+            el.style.setProperty('--posY', y - t - h / 2);
+        })
+
+        const toastTrigger = document.getElementById('liveToastBtn')
+        const toastLiveExample = document.getElementById('liveToast')
+
+        if (toastTrigger) {
+            const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
+            toastTrigger.addEventListener('click', () => {
+                toastBootstrap.show()
+            })
         }
     </script>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-
 </bodyLogin>
 </html>

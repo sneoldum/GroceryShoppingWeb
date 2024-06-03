@@ -189,3 +189,444 @@ bodyLogin {
     bodyLogin.active {
         background: #f43648;
     }
+
+/*Start of Login Page*/
+
+.contain {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #03a9f4;
+    transition: 0.5s;
+}
+
+.blueBg {
+    position: absolute;
+    top: 25%;
+    width: 96%;
+    height: 420px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 5px 45px rgba(0, 0, 0, 0.15);
+}
+
+    .blueBg .box {
+        position: relative;
+        width: 50%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column
+    }
+
+    .blueBg .h2 {
+        color: #fff;
+        font-size: 1.2em;
+        font-weight: 500;
+        margin-bottom: 10px;
+    }
+
+    .blueBg .box button {
+        cursor: pointer;
+        padding: 10px 20px;
+        background: #ffffff;
+        color: #333;
+        font-size: 16px;
+        font-weight: 500;
+        border: none;
+    }
+
+.formBx {
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    width: 50%;
+    height: 75%;
+    background: #fff;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 5px 45px rgba(0,0,0,0.25);
+    transition: 0.5s ease-in-out;
+    overflow: hidden;
+}
+
+    .formBx.active {
+        left: 43%;
+    }
+
+    .formBx .form {
+        position: absolute;
+        left: 0;
+        width: 100%;
+        padding: 50px;
+        transition: 0.5s;
+    }
+
+    .formBx .signinForm {
+        transition-delay: 0.25s;
+    }
+
+    .formBx .signupForm {
+        left: 100%;
+    }
+
+    .formBx.active .signinForm {
+        left: -100%;
+        transition-delay: 0s;
+    }
+
+    .formBx.active .signupForm {
+        left: 0;
+        transition-delay: 0.25s;
+    }
+
+    .formBx .form form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .formBx .form h3 {
+        font-size: 1.5em;
+        color: #333333;
+        margin-bottom: 20px;
+        font-weight: 500;
+    }
+
+    .formBx .form form input {
+        width: 100%;
+        margin-bottom: 20px;
+        padding: 10px;
+        outline: none;
+        font-size: 16px;
+        border: 1px solid #333;
+    }
+
+        .formBx .form form input[type="submit"] {
+            background: #03a9f4;
+            border: none;
+            color: #ffffff;
+            max-width: 100px;
+            cursor: pointer;
+        }
+
+    .formBx.active .form form input[type="submit"] {
+        background: #f43648;
+        border: none;
+        color: #ffffff;
+        max-width: 100px;
+        cursor: pointer;
+    }
+
+    .formBx .form form .forgot {
+        color: #333333;
+    }
+
+bodyLogin {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #03a9f4;
+    transition: 0.5s;
+}
+
+    bodyLogin.active {
+        background: #f43648;
+    }
+
+.main-wrapper {
+    width: 100vw;
+    overflow: hidden;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    font-family: "Helvetica Nueue",Arial,Verdana,sans-serif;
+    background: url(/images/world-map.png);
+    background-size: cover;
+    z-index: 0;
+    height: 100vh;
+    margin: 0 !important;
+}
+
+/* entire container, keeps perspective */
+.card-container {
+    perspective: 500px;
+    margin-bottom: 30px;
+}
+    /* flip the pane when hovered */
+    .card-container.rotate .card {
+        transform: rotateY( 180deg );
+    }
+/* flip speed goes here */
+.card {
+    transition: transform .85s;
+    transform-style: preserve-3d;
+    position: relative;
+}
+
+/* hide back of pane during swap */
+.login-form, .signup-form {
+    backface-visibility: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #FFF;
+    box-shadow: 0 1px 3px 2px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+}
+
+/* front pane, placed above back */
+.login-form {
+    z-index: 2;
+}
+
+/* back, initially hidden pane */
+.signup-form {
+    transform: rotateY(180deg);
+    z-index: 3;
+}
+
+/*        Style       */
+.card-container {
+    width: 300px;
+    margin: 0 auto;
+}
+
+.card {
+    background: #FFFFFF;
+    border-radius: 4px;
+    color: #444444;
+}
+
+.card-container, .login-form, .signup-form {
+    height: 420px;
+    border-radius: 4px;
+}
+
+.login-form, .signup-form {
+    width: 100%;
+    height: auto;
+    border-radius: 15px;
+}
+
+.card .header {
+    margin: 10px;
+    padding: 10px 0 10px 0;
+    text-align: center;
+    border-bottom: 1px solid #EEEEEE;
+    color: #999999;
+    text-transform: uppercase;
+    font-weight: bold;
+    box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -7px rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+}
+
+.card .content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0);
+    box-shadow: none;
+    flex: 1;
+}
+
+.card .footer {
+    border-top: 1px solid #EEEEEE;
+    color: #999999;
+    padding: 5px 0 5px 0;
+    text-align: center;
+}
+
+.btnLogin {
+    border: none;
+    border-radius: 2px;
+    display: inline-block;
+    height: 36px;
+    line-height: 36px;
+    padding: 0 16px;
+    font-family: inherit;
+    font-weight: 100;
+    text-align: center;
+    vertical-align: middle;
+    user-select: none;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    transition: .4s;
+}
+
+.btn-rotate {
+    color: #212529;
+    background-color: #ddd;
+    border-radius: 20px;
+}
+
+    .btn-rotate:hover {
+        color: #212529;
+        background-color: #ccc;
+    }
+
+    .btn-rotate:focus {
+        outline: none;
+        border: none;
+    }
+
+.btn-submit {
+    /*width: 50%;*/
+    margin: 0 auto;
+    border-radius: 20px;
+    text-transform: uppercase;
+    color: #212529;
+    font-weight: bold;
+    background-color: #809BE0;
+}
+
+    .btn-submit:hover {
+        color: #212529;
+        background-color: #4D8CDE;
+    }
+
+    .btn-submit:focus {
+        outline: none;
+        border: none;
+    }
+
+form {
+    width: 100%;
+}
+
+.input-field {
+    position: relative;
+    width: 90%;
+    margin: 20px auto;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    .input-field input {
+        width: 100%;
+        max-height: 20px;
+        padding: 20px;
+        margin-bottom: 10px;
+        border: none;
+        outline: none;
+        border-radius: 30px;
+        background-color: #A2B2DE;
+        color: #fff;
+        transition: .4s;
+    }
+
+::-webkit-input-placeholder {
+    color: #fff;
+}
+
+::-moz-placeholder {
+    color: #fff;
+}
+
+:-ms-input-placeholder {
+    color: #fff;
+}
+
+::-ms-input-placeholder {
+    color: #fff;
+}
+
+::placeholder {
+    color: #fff;
+}
+
+.input-field input:focus {
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+}
+
+.see-password {
+    position: absolute;
+    right: 10px;
+    padding-bottom: 5px;
+    cursor: pointer;
+}
+
+.group input {
+    padding-right: 40px;
+}
+
+
+/*End of Login Page*/
+
+/* Start of Home Page */
+
+
+.cardButton {
+    background-color: chartreuse;
+    border: none;
+    text-align: center;
+    outline: none;
+    font-size: 18px;
+    transition: 0.4s;
+}
+
+    .cardButton.active, .cardButton:hover {
+        background-color: #f43648;
+    }
+
+.card-body {
+    align-content: space-between;
+}
+
+.container-bet {
+    border: 2px solid blue;
+    border-radius: 15px;
+    width: max-width: 100%; /* Geniþliði ihtiyacýnýza göre ayarlayabilirsiniz */
+    padding: 20px;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    display: flex; /* Bu satýrý ekleyin */
+    flex-wrap: wrap; /* Ýçerik çoksa yeni satýra geçmesi için */
+    justify-content: space-between; /* Ýçerikleri eþit aralýklarla hizalar */
+    align-items: center; /* Dikey hizalama */
+    margin: 10px 0px;
+}
+
+button {
+    background-color: #ffffff;
+}
+
+.bet-option {
+    border: 1px solid blue;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Add transition for smooth animation */
+}
+
+    .bet-option span {
+        display: block;
+        font-size: 24px;
+        color: blue;
+        transition: color 0.3s ease; /* Ensure the color transition is smooth */
+    }
+
+    .bet-option:hover {
+        background-color: blue; /* Background color on hover */
+        color: white; /* Text color on hover */
+    }
+
+        .bet-option:hover span {
+            color: white; /* Text color on hover for the span */
+        }

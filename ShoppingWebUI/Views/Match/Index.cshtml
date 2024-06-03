@@ -1,0 +1,113 @@
+﻿@using ShoppingWebUI.Services;
+@model BetListViewModel
+@{
+    ViewData["Title"] = "Home page";
+    Layout = "_Layout";
+}
+
+<div class="container">
+    <div class="row mt-3">
+        <div class="col-md-12 d-flex justify-content-between align-items-center">
+            <h1>Bugünkü Tüm maçlar</h1>
+            <div class="ml-auto">
+                <p>Bakiye: @Model.Balance</p>
+            </div>
+        </div>
+    </div>
+    @if (Model.Data != null)
+    {
+        <div class="accordion" id="accordionExample">
+            @foreach (var match in Model.Data.Datas.events)
+            {
+
+
+                var date = DateTimeOffset.FromUnixTimeSeconds(match.d).LocalDateTime;
+                var dDate = date.Date;
+                var today = DateTimeOffset.Now.LocalDateTime.Date;
+
+                if (today == dDate)
+                {
+                    var targetText = "collapse" + match.i;
+                    <div class="accordion-item mb-3">
+                        <h2 class="accordion-header" id="heading@match.i">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#@targetText" aria-expanded="true" aria-controls="@targetText">
+                                @match.hn - @match.an
+                            </button>
+                        </h2>
+                        <div id="@targetText" class="accordion-collapse collapse show" aria-labelledby="heading@match.i" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                @if (Model.MatchDetails != null)
+                                {
+                                    var title = "";
+
+                                    var betService = new BetService();
+                                    var details = betService.GetMatchById(match.i).Datas;
+
+                                    @foreach (var item in details.m)
+                                    {
+                                        switch (item.st)
+                                        {
+                                            case 1:
+                                                title = "Maç Sonucu";
+                                                break;
+                                            case 698:
+                                                title = "Maç Sonucu ve Karşılıklı Gol";
+                                                break;
+                                            case 91:
+                                                title = "Tek/Çift";
+                                                break;
+                                            case 89:
+                                                title = "Karşılıklı Gol";
+                                                break;
+                                            default:
+                                                title = "Bilinmeyen Market";
+                                                break;
+                                        }
+                                        if (title != "Bilinmeyen Market")
+                                        {
+                                            <div class="card mb-4">
+                                                <div class="card-header text-center">
+                                                    <h4 class="card-title mb-0">@title</h4>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row g-3">
+                                                        @foreach (var outcome in item.o)
+                                                        {
+                                                            <div class="col-md-6 col-lg-4">
+                                                                <div class="card h-100">
+                                                                    <div class="card-body">
+                                                                        <form asp-action="PlaceBet" method="post">
+                                                                            <div class="d-flex justify-content-between mb-2">
+                                                                                <span>@outcome.n</span>
+                                                                                <span>@outcome.odd</span>
+                                                                            </div>
+                                                                            <div class="input-group mb-2">
+                                                                                <input type="number" class="form-control" asp-for="BetAmount" min="1" max="@Model.Balance" />
+                                                                                <span asp-validation-for="BetAmount" class="text-danger"></span>
+                                                                            </div>
+                                                                            <input type="hidden" value="@item.i" asp-for="ItemId" />
+                                                                            <input type="hidden" value="@item.st" asp-for="st" />
+                                                                            <input type="hidden" value="@match.d" asp-for="date" />
+                                                                            <input type="hidden" value="@outcome.no" asp-for="No" />
+                                                                            <input type="hidden" value="@outcome.odd" asp-for="Odd" />
+                                                                            <input type="hidden" value="@match.i" asp-for="matchId" />
+                                                                            <button type="submit" class="btn btn-primary w-100">Bahis Yap</button>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    }
+</div>

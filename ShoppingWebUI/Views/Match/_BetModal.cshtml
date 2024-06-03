@@ -1,0 +1,27 @@
+﻿<!-- _BetModal.cshtml -->
+<div class="modal fade" id="betModal" tabindex="-1" role="dialog" aria-labelledby="betModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="betModalLabel">Bahis Yap</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="modalMatchResult">Maç Sonucu: </p>
+                <p id="modalOdds">Oran: </p>
+                <form id="betForm" method="post" asp-controller="Match" asp-action="PlaceBet">
+                    <input type="hidden" id="itemId" name="ItemId" />
+                    <input type="hidden" id="odd" name="Odd" />
+                    <input type="hidden" id="no" name="No" />
+                    <div class="form-group">
+                        <label for="betAmount">Bahis Miktarı</label>
+                        <input type="number" class="form-control" id="betAmount" name="betAmount" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Bahis Yap</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
